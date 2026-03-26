@@ -1,16 +1,49 @@
-export default async function handler(req, res) {
-  if (req.method === "GET") {
-    return res.status(200).json({ message: "API çalışıyor" });
-  }
+export default function handler(req, res) {
+  res.setHeader("Content-Type", "text/html");
 
-  if (req.method === "POST") {
-    const { orderNumber, email } = req.body;
+  res.send(`
+    <html>
+      <head>
+        <title>Sipariş Takip</title>
+        <style>
+          body {
+            font-family: Arial;
+            background: #f5f5f5;
+            text-align: center;
+            padding: 50px;
+          }
+          input, button {
+            padding: 10px;
+            margin: 5px;
+          }
+          .box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+          }
+        </style>
+      </head>
+      <body>
 
-    return res.status(200).json({
-      success: true,
-      status: "Hazırlanıyor",
-    });
-  }
+        <div class="box">
+          <h2>Sipariş Takip</h2>
+          
+          <input id="order" placeholder="Sipariş No" />
+          <input id="email" placeholder="Email" />
+          <br/>
+          <button onclick="check()">Sorgula</button>
 
-  return res.status(405).json({ error: "Method not allowed" });
+          <p id="result"></p>
+        </div>
+
+        <script>
+          function check() {
+            document.getElementById("result").innerText = "Hazırlanıyor";
+          }
+        </script>
+
+      </body>
+    </html>
+  `);
 }
